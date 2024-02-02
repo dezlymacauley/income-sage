@@ -1,6 +1,19 @@
 # Slint Rust Template
-
+https://github.com/slint-ui/slint-rust-template
 A template for a Rust application that's using [Slint](https://slint.rs) for the user interface.
+
+Focus on the src folder and the ui folder
+
+You may want to install the following from the AUR (Arch Linux):
+
+`paru -S slint-lsp-bin`
+
+`paru -S slint-cpp-bin`
+
+If for whatever reason that doesn't work:
+Use cargo to install the slint lsp
+
+`cargo install slint-lsp`
 
 ## About
 

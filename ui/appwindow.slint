@@ -1,17 +1,65 @@
-import { Button, VerticalBox } from "std-widgets.slint";
+import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
+
+// NOTE: "AppWindow" can be named whatever you want
+
+// NOTE: You can make your code look neater using the component keyword.
+
+// Now I have created a reusable button.
+component MyCoolButton {
+    
+    Button {
+        text: "Calculate";
+        primary: true; // Doesn't seem to change anything
+        height: 35px;
+    }
+
+}
+
 
 export component AppWindow inherits Window {
-    in-out property<int> counter: 42;
-    callback request-increase-value();
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
-        }
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
+    
+    background: #140e19;
+
+    GridLayout {
+   
+    // This will create a padding of 50px around the 3 columns
+    padding: 50px;
+
+    // This will create 25px of space between the three rows
+    spacing: 25px;
+
+    // This will create 3 rows in a grid layout format
+
+        Row {
+
+            Text {
+                color: #8d16fc;
+                text: "Enter Income Amount";
+                horizontal-alignment: center;
+                font-size: 24px;
+                font-weight: 900;
             }
+
         }
+
+        Row {
+           
+            // NOTE: To use this add LineEdit to the import statement
+            LineEdit {
+                horizontal-alignment: center;
+                font-size: 16px;
+                placeholder-text: "Enter text here";
+                height: 35px;
+            }
+
+        }
+
+        Row {
+            
+            // This is creating a button from the component I created earlier
+            MyCoolButton {}
+
+        }
+
     }
 }
