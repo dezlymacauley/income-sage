@@ -1,0 +1,103 @@
+import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
+
+// NOTE: "AppWindow" can be named whatever you want
+
+// NOTE: You can make your code look neater using the component keyword.
+
+// Now I have created a reusable button.
+component MyCoolButton {
+    
+    Button {
+        text: "Calculate";
+        primary: true; // Doesn't seem to change anything
+        height: 35px;
+        clicked => {divide-income(income.text)}
+        // When the button is clicked it envokes a callback.
+    }
+
+}
+
+
+export component AppWindow inherits Window {
+   
+    // When the button is clicked, the result will be shown at the bottom.
+    in property <string> results: "";
+    
+    // I am creating a callback function that needs a string to work.
+    // 1. The Button is clicked.
+    // 2. The text in the input box is stored in the variable income,
+    // the variable income is a string, 
+    // which is sent to the callback function below.
+    callback divide-income(string);
+
+    // This callback function is going do some calculations with the string,
+    // and disply them in results. property <string> results;
+
+    background: #140e19;
+
+    GridLayout {
+   
+    // This will create a padding of 50px around the 3 columns
+    padding: 50px;
+
+    // This will create 25px of space between the three rows
+    spacing: 25px;
+
+    // This will create 3 rows in a grid layout format
+
+        Row {
+
+            Text {
+                color: #8d16fc;
+                text: "Enter Income Amount";
+                horizontal-alignment: center;
+                font-size: 24px;
+                font-weight: 900;
+            }
+
+        }
+
+        Row {
+           
+            // NOTE: To use this add LineEdit to the import statement
+            
+            // The value typed in the input box (Which is LineEdit in slint),
+            // will then be stored in the variable income.
+            income := LineEdit {
+                horizontal-alignment: center;
+                font-size: 16px;
+                placeholder-text: "Enter text here";
+                height: 35px;
+            }
+
+        }
+
+        Row {
+            
+            // This is creating a button from the component I created earlier
+            MyCoolButton {}
+        }
+
+        Row {
+            
+            VerticalBox {
+                
+                Rectangle {
+                    height: 100px;
+                    background: #f2f2f2;
+                    Text {
+                        color: black;
+                        font-size: 16px;
+                        font-weight: 500;
+                        text:root.results;
+                        // You use root result because the component,
+                        // is located outside of the grid layout
+                    }
+                }    
+
+            }
+
+        }
+
+    }
+}

@@ -1,65 +1,76 @@
-import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
-
-// NOTE: "AppWindow" can be named whatever you want
-
-// NOTE: You can make your code look neater using the component keyword.
-
-// Now I have created a reusable button.
-component MyCoolButton {
-    
-    Button {
-        text: "Calculate";
-        primary: true; // Doesn't seem to change anything
-        height: 35px;
-    }
-
-}
-
+import { Button, VerticalBox , LineEdit, StandardListView, GroupBox} from "std-widgets.slint";
 
 export component AppWindow inherits Window {
-    
-    background: #140e19;
+
+    in property <string> results: "";
+    callback divide-income(string);
+    in-out property <bool> open_curtain;
+    animate background { duration: 800ms; }
+
+    background: #313e50;
 
     GridLayout {
-   
-    // This will create a padding of 50px around the 3 columns
-    padding: 50px;
-
-    // This will create 25px of space between the three rows
-    spacing: 25px;
-
-    // This will create 3 rows in a grid layout format
-
+        padding: 50px;
+        spacing: 25px;
         Row {
-
-            Text {
-                color: #8d16fc;
-                text: "Enter Income Amount";
+            text := Text {
+                text: "Enter Total Income";
                 horizontal-alignment: center;
                 font-size: 24px;
                 font-weight: 900;
             }
-
         }
-
         Row {
-           
-            // NOTE: To use this add LineEdit to the import statement
-            LineEdit {
-                horizontal-alignment: center;
+            input := LineEdit {
+                placeholder-text: "Enter your number";
                 font-size: 16px;
-                placeholder-text: "Enter text here";
                 height: 35px;
+                horizontal-alignment: center;
             }
-
         }
-
         Row {
-            
-            // This is creating a button from the component I created earlier
-            MyCoolButton {}
-
+            button := Button {
+                text: "Calculate";
+                padding-top: 30px;
+                height: 35px;
+                primary: true;
+                clicked => {
+                    root.open_curtain = !root.open_curtain;
+                    root.divide-income(input.text);
+                }
+            }
         }
+        Row {
+            VerticalBox {
+                Rectangle {
+                    height: 100px;
+                    background: #f2f2f2;
+                    Text {
+                        text: root.results;
+                        font-size: 16px;
+                        color: #000000;
+                        font-weight: 500;
+                    }
+                    // Left curtain
+                    Rectangle {
+                        background: #333333;
+                        x: 0px;
+                        width: open_curtain ? 0px : (parent.width / 2);
+                        height: parent.height;
+                        animate width { duration: 250ms; easing: ease-in; }
+                    }
 
+                    // Right curtain
+                    Rectangle {
+                        background: #333333;
+                        x: open_curtain ? parent.width : (parent.width / 2);
+                        width: open_curtain ? 0px : (parent.width / 2);
+                        height: parent.height;
+                        animate width { duration: 250ms; easing: ease-in; }
+                        animate x { duration: 250ms; easing: ease-in; }
+                    }
+                }
+            }
+        }
     }
 }
